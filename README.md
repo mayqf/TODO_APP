@@ -4,7 +4,7 @@ For setting up the environment to execute this test existed in this repo, please
 
 **clone this repo to a local directory**
 
-git clone https://github.com/mayqf/QA_Project-.git
+git clone https://github.com/mayqf/TODO_APP-.git
 
 **cd into the cloned repo**
 

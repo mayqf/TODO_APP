@@ -15,6 +15,10 @@ body {
 #footer {
   background: var(--menuBg);
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 /* Overrides default styled accordion styles (too much bottom padding) */
 .ui.styled.accordion .content {

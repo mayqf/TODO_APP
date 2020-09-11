@@ -19,16 +19,17 @@ function Header({ user }) {
     <Menu stackable fluid id="menu" inverted>
       <Container text>
         <Link href="/">
-          <Menu.Item header active={isActive("/")}>
+          <Menu.Item header active={isActive("/")} position={"left"}>
             <Image
+              circular 
               size="mini"
               src="/static/todo-header.png"
-              style={{ marginRight: "1em" }}
+              style={{ marginRight: "1em" }
+            }
             />
             TodoApp
           </Menu.Item>
         </Link>
-
         {user ? (
           <>
             <Link href="/account">

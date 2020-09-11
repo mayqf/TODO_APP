@@ -1,17 +1,17 @@
 import Profile from "../components/Account/Profile";
 import SearchBar from "../components/Account/SearchBar";
-import Form from "../components/Account/Form";
-import TodoList from "../components/Account/Todolist";
+import TodoForm from "../components/Account/TodoForm";
+import TodoList from "../components/Account/TodoList";
 
 function Account({user}) {
-  
   
   return (
     <>
       <Profile {...user}/>
-      <SearchBar/>
-      <Form/>
-      <TodoList/>
+     
+      <TodoForm user={user}/>
+      <TodoList user={user} />
+      
     </>
   
     );
