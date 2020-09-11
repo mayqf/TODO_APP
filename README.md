@@ -1,12 +1,5 @@
 # TODO APP
 
-MongoDB
-Express
-React 
-Node.js
-Next.js
-React Semantic UI
-
 For setting up the environment to execute this test existed in this repo, please run the following commands:
 
 **clone this repo to a local directory**
@@ -15,7 +8,7 @@ git clone https://github.com/mayqf/TODO_APP-.git
 
 **cd into the cloned repo**
 
-cd realworld_cypress
+cd TODO_APP
 
 **install the node_modules**
 
@@ -25,23 +18,19 @@ npm dependencies
 
 npm run dev
 
-**open**
-
 
 ---
 
 
 **WHAT DOES THE APP FEATURE?**
 
-Complete User Authentication (Login / Signup)
+User Authentication (Login / Signup)
 
-Server-side Rendering
-
-React Hooks throughout the Entire App
-
-Core Node.js / Express Concepts
+Next.js with Server-side Rendering
 
 Next.js with API Routes
+
+Node.js / Express 
 
 User authentication with JWT and Cookies
 
@@ -49,7 +38,7 @@ Password hashing with bcrypt
 
 Modeling database content with Mongoose Schemas
 
-Creating Impressive UIs with Semantic UI React
+UIs with Semantic UI React
 
 Querying / Mutating Data with Mongoose
 
