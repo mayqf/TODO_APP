@@ -46,6 +46,7 @@ export default async (req, res) => {
 };
 
 async function getTodos(req, res, user) {
+  console.log(user)
   try {
     const todos = await Todo.find({user: user._id}).populate({path: 'user', model: User});
     return res.json({todos});
@@ -56,6 +57,7 @@ async function getTodos(req, res, user) {
 
 async function createTodo(req, res, user) {
   const {title, description, category} = req.body;
+  
   try {
     if (!title || !description || !category) {
       return res.status(422).send("Todo missing one or more fields");

@@ -1,5 +1,6 @@
 import React from "react";
-import { Input,Container,Message} from 'semantic-ui-react'
+import { Input,Container,Message,Card} from 'semantic-ui-react';
+import formatDate from "../../utils/formatDate";
 
 
 const SearchBar = ({todos}) => {
@@ -13,9 +14,10 @@ const SearchBar = ({todos}) => {
 
   React.useEffect(() => {
     const results = todos.filter(todo =>
-      todo.category.toLowerCase().includes(searchTerm)
+      todo.category==searchTerm
     );
     setSearchResults(results);
+    console.log(results);
   }, [searchTerm]);
   
   if (!todos || todos.length === 0) {
@@ -34,14 +36,15 @@ const SearchBar = ({todos}) => {
       
 
       {searchTerm ? 
+
         <Card.Group>
-          {todos.map(todo => {a
-            const isInProgress = inProgressTodos.includes(id => id === todo._id);
+          {todos.map(todo => {
             return (
               <Card>
                 <Card.Content>
                   <Card.Header>{todo.title}</Card.Header>
-                  <Card.Meta>{todo.user.name}</Card.Meta>
+                  <Card.Meta>{todo.category}</Card.Meta>
+                  <Card.Meta>Created at {formatDate(todo.createdAt)}</Card.Meta>
                   <Card.Description>
                     {todo.description}
                   </Card.Description>

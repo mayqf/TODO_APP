@@ -1,9 +1,10 @@
 import React from "react";
-import { parseCookies } from "nookies";
-import {Card, Message} from 'semantic-ui-react';
+import {Card, Message,Button} from 'semantic-ui-react';
 import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
 import catchErrors from "../../utils/catchErrors";
+import formatDate from "../../utils/formatDate";
+import cookie from "js-cookie";
 
 const TodoList = ({user, todos, token}) => {
   
@@ -20,7 +21,34 @@ const TodoList = ({user, todos, token}) => {
       setLoading(true);
       setError("");
       const url = `${baseUrl}/api/todo`;
-      await axios.delete(url, {_id: todo._id});
+      const token = cookie.get("token");
+      await axios.delete(url, 
+        {_id: todo._id}, 
+        { headers: 
+          { Authorization: token}
+        });
+      setSuccess(true);
+    } catch (error) {
+      catchErrors(error, setError);
+    } finally {
+      setLoading(false);
+      setInProgressTodos(inProgressTodos.filter(id => id !== todo._id));
+    }
+  }
+
+  const handleTodoEdit = async  (todo) => {
+    if (loading && inProgressTodos.includes(todo._id)) return;
+    try {
+      setInProgressTodos([...inProgressTodos, todo._id]);
+      setLoading(true);
+      setError("");
+      const url = `${baseUrl}/api/todo`;
+      const token = cookie.get("token");
+      await axios.put(url, 
+        {_id: todo._id}, 
+        { headers: 
+          { Authorization: token}
+        });
       setSuccess(true);
     } catch (error) {
       catchErrors(error, setError);
@@ -38,13 +66,14 @@ const TodoList = ({user, todos, token}) => {
     <>
     {error && <Message error content={error}/>}
     <Card.Group>
-      {todos.map(todo => {a
+      {todos.map(todo => {
         const isInProgress = inProgressTodos.includes(id => id === todo._id);
         return (
-        <Card>
+        <Card >
           <Card.Content>
             <Card.Header>{todo.title}</Card.Header>
-            <Card.Meta>{todo.user.name}</Card.Meta>
+            <Card.Meta>{todo.category}</Card.Meta>
+            <Card.Meta>Created at {formatDate(todo.createdAt)}</Card.Meta>
             <Card.Description>
               {todo.description}
             </Card.Description>
@@ -64,18 +93,6 @@ const TodoList = ({user, todos, token}) => {
     </Card.Group>
     </>
   );
-};
-
-TodoList.getInitialProps = async ctx => {
-  const { token } = parseCookies(ctx);
-  if (!token) {
-    return { todos: [] };
-  }
-  const payload = { headers: { Authorization: token } };
-  const url = `${baseUrl}/api/todo`;
-  const response = await axios.get(url, payload);
-  console.log(response)
-  return {...response.data, token};
 };
 
 

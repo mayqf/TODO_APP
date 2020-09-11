@@ -17,7 +17,8 @@ function Layout({ children,user }) {
           rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css"
         />
-        <title>ReactTodo</title>
+        <title>TodoApp</title>
+        <link rel="icon" href="/static/todo-header.png" />
       </Head>
       <Header user={user}/>
       <Container text style={{ paddingTop: "1em" }}>

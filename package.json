@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Project for Todo App with JS/React",
   "main": "index.js",
+  "engines": {
+    "node": "6.11.1"
+  },
   "scripts": {
     "dev": "next",
     "start": "next start",

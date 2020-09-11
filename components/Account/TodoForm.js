@@ -19,7 +19,7 @@ const INITIAL_TODO = {
 };
 
 
-function TodoForm({user, token}) {
+function TodoForm() {
  
   const [todo, setTodo] = React.useState(INITIAL_TODO);
   const [success, setSuccess] = React.useState(false);
@@ -118,6 +118,7 @@ function TodoForm({user, token}) {
 
 TodoForm.getInitialProps = async ctx => {
   const { token } = parseCookies(ctx);
+  console.log(token)
   return {token};
 };
 

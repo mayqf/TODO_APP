@@ -2,7 +2,7 @@ import { Container,Image,Header} from "semantic-ui-react";
 import Link from "next/link";
 
 
-function HomePage() {
+function HomePage({user}) {
     return (
     <Container >
         <Image
@@ -16,4 +16,6 @@ function HomePage() {
   }
   
   export default HomePage;
+  
+
   
