@@ -1,5 +1,12 @@
 # TODO APP
 
+MongoDB
+Express
+React 
+Node.js
+Next.js
+React Semantic UI
+
 For setting up the environment to execute this test existed in this repo, please run the following commands:
 
 **clone this repo to a local directory**
@@ -36,13 +43,7 @@ Core Node.js / Express Concepts
 
 Next.js with API Routes
 
-Linking together React Client + Express API
-
 User authentication with JWT and Cookies
-
-Role-based access control with multiple user types
-
-Lots of data fetching on the client / server
 
 Password hashing with bcrypt
 
@@ -52,15 +53,8 @@ Creating Impressive UIs with Semantic UI React
 
 Querying / Mutating Data with Mongoose
 
-Async / Await + Essential Error Handling Patterns
-
 Managing MongoDB database with the Atlas Interface
 
-Protecting private client routes with Next.js / React
-
-Securing private data with environment variables
-
-Validating Requests in Node / Express Apps
 
 
 
