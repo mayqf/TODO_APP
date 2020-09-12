@@ -5,8 +5,9 @@ import baseUrl from "../../utils/baseUrl";
 import catchErrors from "../../utils/catchErrors";
 import formatDate from "../../utils/formatDate";
 import cookie from "js-cookie";
+import Link from 'next/link';
 
-const TodoList = ({user, todos, token, setTodos}) => {
+const TodoList = ({user, todos, token, setTodos}, ctx) => {
   
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
@@ -38,30 +39,6 @@ const TodoList = ({user, todos, token, setTodos}) => {
     }
   }
 
-  const handleTodoEdit = async  (todo) => {
-    if (loading) return;
-    try {
-      setLoading(true);
-      setError("");
-      const url = `${baseUrl}/api/todo`;
-      const token = cookie.get("token");
-      await axios.put(url, 
-        {_id: todo._id}, 
-        { headers: 
-          { Authorization: token}
-        });
-      setSuccess('Todo saved successfully.');
-      setTimeout(() => {
-        setSuccess('');
-      }, 2000);
-    } catch (error) {
-      catchErrors(error, setError);
-      setSuccess('');
-    } finally {
-      setLoading(false);
-    }
-  }
-
   if (!todos || todos.length === 0) {
     return <Message info content='You have not created a todo yet. Try it out!'/>
   }
@@ -88,9 +65,7 @@ const TodoList = ({user, todos, token, setTodos}) => {
           </Card.Content>
           <Card.Content extra>
             <div className='ui two buttons'>
-              <Button floated='left' basic color='green' onClick={() => handleTodoEdit(todo)} >
-                 Edit
-              </Button>
+              <Link href={`/todo/${todo._id}`}><Button floated='left' basic color='green'>Edit</Button></Link>
               <Button floated='right' basic color='red' onClick={() => handleTodoDelete(todo)}>
                  Delete
               </Button>

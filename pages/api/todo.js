@@ -2,7 +2,6 @@ import User from "../../models/User";
 import Todo from "../../models/Todo";
 import jwt from "jsonwebtoken";
 import connectDb from "../../utils/connectDb";
-import {parseCookies} from 'nookies';
 
 connectDb();
 
@@ -32,7 +31,7 @@ export default async (req, res) => {
         await createTodo(req, res, user);
         break;
       case "PUT":
-        await editTodo(req, res, user);
+        await editTodo(req, res);
         break;
       case "DELETE":
         await deleteTodo(req, res, user);
@@ -48,9 +47,21 @@ export default async (req, res) => {
 };
 
 async function getTodos(req, res, user) {
+  if (req.headers.id) {
+    return getSingleTodo(req.headers.id, res)
+  }
   try {
     const todos = await Todo.find({user: user._id}).populate({path: 'user', model: User});
     return res.json({todos});
+  } catch (error) {
+    return res.status(500).json({error: error.message});
+  }
+}
+
+async function getSingleTodo(id, res) {
+  try {
+    const todo = await Todo.findOne({_id: id});
+    return res.json(todo);
   } catch (error) {
     return res.status(500).json({error: error.message});
   }
@@ -75,7 +86,7 @@ async function createTodo(req, res, user) {
   }
 }
 
-async function editTodo(req, res, user) {
+async function editTodo(req, res) {
   const {_id, title, description, category} = req.body;
   try {
     if (!_id) {

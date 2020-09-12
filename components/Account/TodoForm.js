@@ -19,16 +19,15 @@ const INITIAL_TODO = {
 };
 
 
-function TodoForm() {
+function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}) {
  
-  const [todo, setTodo] = React.useState(INITIAL_TODO);
+  const [todo, setTodo] = React.useState(initialTodo);
   const [success, setSuccess] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [disabled, setDisabled] = React.useState(true);
   const [error, setError] = React.useState("");
 
   React.useEffect(() => {
-  
     const isTodoReady = Object.values(todo).every(el => Boolean(el));
     isTodoReady ? setDisabled(false) : setDisabled(true);
   }, [todo]);
@@ -40,22 +39,21 @@ function TodoForm() {
 
   async function handleSubmit(event) {
     try {
-
       event.preventDefault();
       setLoading(true);
       setError("");
       const url = `${baseUrl}/api/todo`;
       const token = cookie.get("token");
-      await axios.post(url, 
+      const todoApi = edit ? axios.put : axios.post;
+      await todoApi(url, 
         {...todo}, 
         { headers: 
           { Authorization: token}
         });
-        
-      setTodo(INITIAL_TODO);
       setSuccess(true);
       setTimeout(() => {
         setSuccess('');
+        onEdit && onEdit();
       }, 2000);
     } catch (error) {
       catchErrors(error, setError);
@@ -77,11 +75,11 @@ function TodoForm() {
           success
           icon="check"
           header="Success!"
-          content="New todo has been created."
+          content={edit ? 'Todo has been edited.' : "New todo has been created."}
         />
         <Segment>
           <Header as="h2" block>
-             Create New Todo
+            {edit ? 'Edit Todo' : 'Create New Todo'}
           </Header>
           <Form.Field
             control={Input}
