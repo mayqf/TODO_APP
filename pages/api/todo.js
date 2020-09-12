@@ -46,7 +46,6 @@ export default async (req, res) => {
 };
 
 async function getTodos(req, res, user) {
-  console.log(user)
   try {
     const todos = await Todo.find({user: user._id}).populate({path: 'user', model: User});
     return res.json({todos});
@@ -80,7 +79,7 @@ async function editTodo(req, res, user) {
     if (!_id) {
       throw new Error('Missing input values for todo edit: _id is required.');
     }
-    const todo = await Todo.findOne({_id, user: user._id});
+    const todo = await Todo.findOne({_id}).populate({path: 'user', model: User});;
     if (!todo) {
       throw new Error('Todo item could not be found.');
     }

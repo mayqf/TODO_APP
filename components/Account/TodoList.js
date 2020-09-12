@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Message,Button} from 'semantic-ui-react';
+import {Card, Message,Button,Container} from 'semantic-ui-react';
 import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
 import catchErrors from "../../utils/catchErrors";
@@ -22,6 +22,7 @@ const TodoList = ({user, todos, token}) => {
       setError("");
       const url = `${baseUrl}/api/todo`;
       const token = cookie.get("token");
+  
       await axios.delete(url, 
         {_id: todo._id}, 
         { headers: 
@@ -63,35 +64,39 @@ const TodoList = ({user, todos, token}) => {
   }
 
   return (
-    <>
+    <Container>
     {error && <Message error content={error}/>}
-    <Card.Group>
+    <Card.Group
+    stackable
+    itemsPerRow="2"
+    fluid="true"
+    >
       {todos.map(todo => {
         const isInProgress = inProgressTodos.includes(id => id === todo._id);
         return (
-        <Card >
+        <Card  key={todo._id} fluid="true" color='violet'>
           <Card.Content>
             <Card.Header>{todo.title}</Card.Header>
             <Card.Meta>{todo.category}</Card.Meta>
-            <Card.Meta>Created at {formatDate(todo.createdAt)}</Card.Meta>
+            <Card.Meta floated='right'>Created at {formatDate(todo.createdAt)}</Card.Meta>
             <Card.Description>
-              {todo.description}
+            {todo.description}
             </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-        <div className='ui two buttons'>
-          <Button basic color='green' onClick={() => handleTodoEdit(todo)} disabled={isInProgress} loading={isInProgress} >
-            Edit
-          </Button>
-          <Button basic color='red' onClick={() => handleTodoDelete(todo)} disabled={isInProgress} loading={isInProgress}>
-            Delete
-          </Button>
-        </div>
-      </Card.Content>
+          </Card.Content>
+          <Card.Content extra>
+            <div className='ui two buttons'>
+              <Button floated='left' basic color='green' onClick={() => handleTodoEdit(todo)} disabled={isInProgress} loading={isInProgress} >
+                 Edit
+              </Button>
+              <Button floated='right' basic color='red' onClick={() => handleTodoDelete(todo)} disabled={isInProgress} loading={isInProgress}>
+                 Delete
+              </Button>
+            </div>
+          </Card.Content>
         </Card>
       )})}
     </Card.Group>
-    </>
+    </Container>
   );
 };
 

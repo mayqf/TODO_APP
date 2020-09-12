@@ -14,48 +14,45 @@ const SearchBar = ({todos}) => {
 
   React.useEffect(() => {
     const results = todos.filter(todo =>
-      todo.category==searchTerm
+      todo.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSearchResults(results);
-    console.log(results);
   }, [searchTerm]);
   
-  if (!todos || todos.length === 0) {
-    return <Message info content='You have not created a todo yet. Try it out!'/>
-  }
   return (
-    <>
-      <Container >
+    
+    <Container>
         <Input
           icon={{ name: 'search', circular: true, link: true }}
           placeholder='Search by category'
           value={searchTerm}
           onChange={handleChange} 
-          size='big' fluid/>
-      </Container>
-      
-
-      {searchTerm ? 
-
-        <Card.Group>
-          {todos.map(todo => {
-            return (
-              <Card>
-                <Card.Content>
-                  <Card.Header>{todo.title}</Card.Header>
-                  <Card.Meta>{todo.category}</Card.Meta>
-                  <Card.Meta>Created at {formatDate(todo.createdAt)}</Card.Meta>
-                  <Card.Description>
-                    {todo.description}
-                  </Card.Description>
-               </Card.Content>
-              </Card>
+          size='big' fluid="true"/>
+        <Container>
+         {searchTerm ? 
+          <Card.Group stackable
+                      itemsPerRow="2"
+                      fluid="true">
+          { searchResults.map(todo => {
+              return (
+               <Card key={todo._id} fluid="true" color='violet'>
+                  <Card.Content>
+                    <Card.Header>{todo.title}</Card.Header>
+                    <Card.Meta>{todo.category}</Card.Meta>
+                    <Card.Meta>Created at {formatDate(todo.createdAt)}</Card.Meta>
+                    <Card.Description>
+                      {todo.description}
+                    </Card.Description>
+                   </Card.Content>
+                </Card>
             )})}
-        </Card.Group>
+          </Card.Group>
 
-      : null }
+          : null }
+
+        </Container>
       
-    </>
+    </Container>
   );
 };
 

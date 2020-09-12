@@ -5,7 +5,6 @@ import TodoList from "../components/Account/TodoList";
 import { parseCookies } from "nookies";
 import axios from "axios";
 import baseUrl from "./../utils/baseUrl";
-import catchErrors from "./../utils/catchErrors";
 
 function Account({user,todos}) {
   
@@ -24,14 +23,12 @@ function Account({user,todos}) {
 Account.getInitialProps = async ctx => {
   
   const { token } = parseCookies(ctx);
-  console.log(token);
   if (!token) {
     return { todos: [] };
   }
   const payload = { headers: { Authorization: token } };
   const url = `${baseUrl}/api/todo`;
   const response = await axios.get(url, payload);
-  console.log(response.data)
   return response.data;
 };
 

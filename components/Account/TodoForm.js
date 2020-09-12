@@ -118,7 +118,6 @@ function TodoForm() {
 
 TodoForm.getInitialProps = async ctx => {
   const { token } = parseCookies(ctx);
-  console.log(token)
   return {token};
 };
 
