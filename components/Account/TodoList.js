@@ -6,41 +6,41 @@ import catchErrors from "../../utils/catchErrors";
 import formatDate from "../../utils/formatDate";
 import cookie from "js-cookie";
 
-const TodoList = ({user, todos, token}) => {
+const TodoList = ({user, todos, token, setTodos}) => {
   
   const [loading, setLoading] = React.useState(false);
-  const [disabled, setDisabled] = React.useState(true);
   const [error, setError] = React.useState("");
-  const [inProgressTodos, setInProgressTodos] = React.useState([])
+  const [success, setSuccess] = React.useState("");
 
  
   const handleTodoDelete = async  (todo) => {
-    if (loading && inProgressTodos.includes(todo._id)) return;
+    if (loading) return;
     try {
-      setInProgressTodos([...inProgressTodos, todo._id]);
       setLoading(true);
       setError("");
       const url = `${baseUrl}/api/todo`;
       const token = cookie.get("token");
   
       await axios.delete(url, 
-        {_id: todo._id}, 
         { headers: 
-          { Authorization: token}
+          { Authorization: token, id: todo._id}
         });
-      setSuccess(true);
+      setTodos(todos.filter(t => t._id !== todo._id));
+      setSuccess('Todo deleted successfully.');
+      setTimeout(() => {
+        setSuccess('');
+      }, 2000);
     } catch (error) {
       catchErrors(error, setError);
+      setSuccess("");
     } finally {
       setLoading(false);
-      setInProgressTodos(inProgressTodos.filter(id => id !== todo._id));
     }
   }
 
   const handleTodoEdit = async  (todo) => {
-    if (loading && inProgressTodos.includes(todo._id)) return;
+    if (loading) return;
     try {
-      setInProgressTodos([...inProgressTodos, todo._id]);
       setLoading(true);
       setError("");
       const url = `${baseUrl}/api/todo`;
@@ -50,12 +50,15 @@ const TodoList = ({user, todos, token}) => {
         { headers: 
           { Authorization: token}
         });
-      setSuccess(true);
+      setSuccess('Todo saved successfully.');
+      setTimeout(() => {
+        setSuccess('');
+      }, 2000);
     } catch (error) {
       catchErrors(error, setError);
+      setSuccess('');
     } finally {
       setLoading(false);
-      setInProgressTodos(inProgressTodos.filter(id => id !== todo._id));
     }
   }
 
@@ -66,13 +69,13 @@ const TodoList = ({user, todos, token}) => {
   return (
     <Container>
     {error && <Message error content={error}/>}
+    {success && <Message success content={success}/>}
     <Card.Group
     stackable
     itemsPerRow="2"
     fluid="true"
     >
       {todos.map(todo => {
-        const isInProgress = inProgressTodos.includes(id => id === todo._id);
         return (
         <Card  key={todo._id} fluid="true" color='violet'>
           <Card.Content>
@@ -85,10 +88,10 @@ const TodoList = ({user, todos, token}) => {
           </Card.Content>
           <Card.Content extra>
             <div className='ui two buttons'>
-              <Button floated='left' basic color='green' onClick={() => handleTodoEdit(todo)} disabled={isInProgress} loading={isInProgress} >
+              <Button floated='left' basic color='green' onClick={() => handleTodoEdit(todo)} >
                  Edit
               </Button>
-              <Button floated='right' basic color='red' onClick={() => handleTodoDelete(todo)} disabled={isInProgress} loading={isInProgress}>
+              <Button floated='right' basic color='red' onClick={() => handleTodoDelete(todo)}>
                  Delete
               </Button>
             </div>

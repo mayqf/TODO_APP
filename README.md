@@ -1,6 +1,8 @@
 # TODO APP
 
-For setting up the environment to execute this test existed in this repo, please run the following commands:
+It is a TODO App that user can create an account,login, add new todos, edit and delete todos.
+
+For setting up the environment to execute app in this repo, please run the following commands:
 
 **clone this repo to a local directory**
 
@@ -18,31 +20,31 @@ npm dependencies
 
 npm run dev
 
+**open**
+
+https://todo-app-6dyl3qtv2.vercel.app/
+
 
 ---
 
 
 **WHAT DOES THE APP FEATURE?**
 
-User Authentication (Login / Signup)
+User Authentication (Login / Signup) with JWT and Cookies
 
-Next.js with Server-side Rendering
-
-Next.js with API Routes
+Next.js with Server-side Rendering and API Routes
 
 Node.js / Express 
-
-User authentication with JWT and Cookies
 
 Password hashing with bcrypt
 
 Modeling database content with Mongoose Schemas
 
-UIs with Semantic UI React
-
 Querying / Mutating Data with Mongoose
 
 Managing MongoDB database with the Atlas Interface
+
+UIs with Semantic UI React
 
 
 

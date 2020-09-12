@@ -2,12 +2,14 @@ import User from "../../models/User";
 import Todo from "../../models/Todo";
 import jwt from "jsonwebtoken";
 import connectDb from "../../utils/connectDb";
+import {parseCookies} from 'nookies';
 
 connectDb();
 
 export default async (req, res) => {
+  console.log({headers: req.headers});
 
-  if (!("authorization" in req.headers)) {
+  if (!req.headers.authorization) {
     return res.status(401).send("No authorization token");
   }
 
@@ -93,13 +95,13 @@ async function editTodo(req, res, user) {
   }
 }
 
-async function deleteTodo(req, res) {
-  const {_id} = req.body;
+async function deleteTodo(req, res, user) {
+  const {id} = req.headers;
   try {
-    if (!_id) {
+    if (!id) {
       throw new Error('Missing input values for todo deletion: _id is required.');
     }
-    await Todo.findOneAndDelete({_id, user: user._id});
+    await Todo.findOneAndDelete({_id: id, user: user._id});
     return res.status(204).json({success: true});
   } catch (error) {
     return res.status(500).json({error: error.message});

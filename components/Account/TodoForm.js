@@ -54,6 +54,9 @@ function TodoForm() {
         
       setTodo(INITIAL_TODO);
       setSuccess(true);
+      setTimeout(() => {
+        setSuccess('');
+      }, 2000);
     } catch (error) {
       catchErrors(error, setError);
     } finally {

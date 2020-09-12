@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import Profile from "../components/Account/Profile";
 import SearchBar from "../components/Account/SearchBar";
 import TodoForm from "../components/Account/TodoForm";
@@ -8,15 +9,15 @@ import baseUrl from "./../utils/baseUrl";
 
 function Account({user,todos}) {
   
+  const [todosInView, setTodosInView] = useState(todos);
+
   return (
     <>
       <Profile {...user}/>
-      <SearchBar user={user} todos={todos}/>
+      <SearchBar user={user} todos={todosInView}/>
       <TodoForm user={user}/>
-      <TodoList user={user} todos={todos}/>
-      
+      <TodoList user={user} todos={todosInView} setTodos={setTodosInView}/>
     </>
-  
     );
 }
 
