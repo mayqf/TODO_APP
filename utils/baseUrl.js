@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "https://todo-app-pi-blue.vercel.app/"
+    ? "https://vast-island-73130.herokuapp.com/"
     : "http://localhost:3000";
 
 export default baseUrl;
