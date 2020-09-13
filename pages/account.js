@@ -15,7 +15,7 @@ function Account({user,todos}) {
     <>
       <Profile {...user}/>
       <SearchBar user={user} todos={todosInView}/>
-      <TodoForm user={user}/>
+      <TodoForm user={user} setTodos={setTodosInView}/>
       <TodoList user={user} todos={todosInView} setTodos={setTodosInView}/>
     </>
     );

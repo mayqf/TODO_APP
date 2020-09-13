@@ -11,7 +11,6 @@ import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
 import catchErrors from "../../utils/catchErrors";
 import cookie from "js-cookie";
-import {redirectUser} from '../../utils/auth.js'
 
 
 const INITIAL_TODO = {
@@ -21,7 +20,7 @@ const INITIAL_TODO = {
 };
 
 
-function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}, ctx) {
+function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit, setTodos}) {
  
   const [todo, setTodo] = React.useState(initialTodo);
   const [success, setSuccess] = React.useState(false);
@@ -47,14 +46,16 @@ function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}, ctx) {
       const url = `${baseUrl}/api/todo`;
       const token = cookie.get("token");
       const todoApi = edit ? axios.put : axios.post;
-      await todoApi(url, 
+      const response = await todoApi(url, 
         {...todo}, 
         { headers: 
           { Authorization: token}
         });
       setSuccess(true);
+      !edit && setTodos(prev => [response.data, ...prev]);
+      !edit && setTodo(INITIAL_TODO);
       setTimeout(() => {
-        setSuccess('');
+        setSuccess(false);
         onEdit && onEdit();
       }, 2000);
     } catch (error) {
@@ -63,9 +64,6 @@ function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}, ctx) {
       setLoading(false);
     }
   }
-  const handleAfterEdit = () => {
-    redirectUser(ctx, '/account');
-  }
 
   return (
     <>
@@ -73,7 +71,8 @@ function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}, ctx) {
         loading={loading}
         error={Boolean(error)}
         success={success}
-        onSubmit={handleSubmit, handleAfterEdit}
+        onSubmit={handleSubmit}
+      
       >
         <Message error header="Oops!" content={error} />
         <Message

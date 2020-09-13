@@ -7,12 +7,12 @@ import formatDate from "../../utils/formatDate";
 import cookie from "js-cookie";
 import Link from 'next/link';
 
-const TodoList = ({user, todos, token, setTodos}, ctx) => {
+const TodoList = ({todos, setTodos}) => {
   
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [success, setSuccess] = React.useState("");
-
+  
  
   const handleTodoDelete = async  (todo) => {
     if (loading) return;
@@ -44,7 +44,7 @@ const TodoList = ({user, todos, token, setTodos}, ctx) => {
   }
 
   return (
-    <Container style={{ paddingTop: "1em" }}>
+    <Container style={{ paddingTop: "2em" }}>
     {error && <Message error content={error}/>}
     {success && <Message success content={success}/>}
     <Card.Group
@@ -57,10 +57,10 @@ const TodoList = ({user, todos, token, setTodos}, ctx) => {
         <Card  key={todo._id} fluid color='violet'>
           <Card.Content>
             <Card.Header>{todo.title}</Card.Header>
-            <Card.Meta>{todo.category}</Card.Meta>
+            <Card.Meta style={{ color: "purple" }}>{todo.category}</Card.Meta>
             <Card.Meta floated='right'>Created at {formatDate(todo.createdAt)}</Card.Meta>
             <Card.Description>
-            {todo.description}
+              {todo.description}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
