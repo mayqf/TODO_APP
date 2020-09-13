@@ -22,7 +22,7 @@ npm run dev
 
 **open**
 
-https://todo-app-6dyl3qtv2.vercel.app/
+https://todo-app-new-one.vercel.app
 
 
 ---
