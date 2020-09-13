@@ -14,7 +14,7 @@ cd TODO_APP
 
 **install the node_modules**
 
-npm dependencies
+npm install
 
 **open**
 
