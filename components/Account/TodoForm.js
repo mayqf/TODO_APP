@@ -11,6 +11,8 @@ import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
 import catchErrors from "../../utils/catchErrors";
 import cookie from "js-cookie";
+import {redirectUser} from '../../utils/auth.js'
+
 
 const INITIAL_TODO = {
   title: "",
@@ -19,7 +21,7 @@ const INITIAL_TODO = {
 };
 
 
-function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}) {
+function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}, ctx) {
  
   const [todo, setTodo] = React.useState(initialTodo);
   const [success, setSuccess] = React.useState(false);
@@ -61,6 +63,9 @@ function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}) {
       setLoading(false);
     }
   }
+  const handleAfterEdit = () => {
+    redirectUser(ctx, '/account');
+  }
 
   return (
     <>
@@ -68,7 +73,7 @@ function TodoForm({initialTodo = INITIAL_TODO, edit = false, onEdit}) {
         loading={loading}
         error={Boolean(error)}
         success={success}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit, handleAfterEdit}
       >
         <Message error header="Oops!" content={error} />
         <Message

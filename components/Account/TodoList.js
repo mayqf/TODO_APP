@@ -44,17 +44,17 @@ const TodoList = ({user, todos, token, setTodos}, ctx) => {
   }
 
   return (
-    <Container>
+    <Container style={{ paddingTop: "1em" }}>
     {error && <Message error content={error}/>}
     {success && <Message success content={success}/>}
     <Card.Group
     stackable
     itemsPerRow="2"
-    fluid="true"
+    fluid
     >
       {todos.map(todo => {
         return (
-        <Card  key={todo._id} fluid="true" color='violet'>
+        <Card  key={todo._id} fluid color='violet'>
           <Card.Content>
             <Card.Header>{todo.title}</Card.Header>
             <Card.Meta>{todo.category}</Card.Meta>

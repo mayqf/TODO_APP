@@ -1,5 +1,4 @@
 import { Message } from 'semantic-ui-react';
-import Link from 'next/link';
 import axios from 'axios';
 import baseUrl from '../../utils/baseUrl';
 import {parseCookies} from 'nookies';

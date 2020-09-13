@@ -1,5 +1,5 @@
 import React from "react";
-import { Input,Container,Message,Card} from 'semantic-ui-react';
+import { Input,Container,Icon,Card} from 'semantic-ui-react';
 import formatDate from "../../utils/formatDate";
 
 
@@ -23,19 +23,22 @@ const SearchBar = ({todos}) => {
     
     <Container>
         <Input
-          icon={{ name: 'search', circular: true, link: true }}
+          
+          icon={<Icon name='delete' circular= 'true' link= 'true'  onClick={() => {
+            setSearchTerm("");
+          }}/>}
           placeholder='Search by category'
           value={searchTerm}
           onChange={handleChange} 
-          size='big' fluid="true"/>
-        <Container>
+          size='big' fluid/>
+        <Container style={{ paddingTop: "1em" }}>
          {searchTerm ? 
           <Card.Group stackable
                       itemsPerRow="2"
-                      fluid="true">
+                      fluid>
           { searchResults.map(todo => {
               return (
-               <Card key={todo._id} fluid="true" color='violet'>
+               <Card key={todo._id} fluid color='violet'>
                   <Card.Content>
                     <Card.Header>{todo.title}</Card.Header>
                     <Card.Meta>{todo.category}</Card.Meta>

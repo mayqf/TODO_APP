@@ -6,8 +6,7 @@ import connectDb from "../../utils/connectDb";
 connectDb();
 
 export default async (req, res) => {
-  console.log({headers: req.headers});
-
+  
   if (!req.headers.authorization) {
     return res.status(401).send("No authorization token");
   }

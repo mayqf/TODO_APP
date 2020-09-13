@@ -21,7 +21,7 @@ function Layout({ children,user }) {
         <link rel="icon" href="/static/todo-header.png" />
       </Head>
       <Header user={user}/>
-      <Container text style={{ paddingTop: "1em" }}>
+      <Container text style={{ paddingTop: "1em" }} style={{ marginBottom: "3em" }}>
         {children}
       </Container>
       <Footer />
